@@ -7,15 +7,12 @@ metadata:
 spec:
   project: default
   sources:
-  - repoURL: 'https://grafana.github.io/helm-charts'
-    chart: grafana
-    targetRevision: 12.0.2
+  - repoURL: 'https://kubernetes-sigs.github.io/metrics-server/'
+    chart: metrics-server
+    targetRevision: 3.8.2
     helm:
       valueFiles:
-      - $values/infra-core/helm/grafana/values.yaml
-      parameters:
-      - name: "ingress.hosts[0]"
-        value: "{{ .Values.argocd.grafana.ingress }}"
+      - $values/infra-core/helm/metricsserver/values.yaml
   - repoURL: 'https://github.com/carlosrovaris/argocd-idp.git'
     targetRevision: main
     ref: values
