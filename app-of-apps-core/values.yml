@@ -1,3 +1,6 @@
+global:
+  namePrefix: ""  # Default empty prefix for main cluster
+
 argocd:
   metricsserver:
     enabled: true

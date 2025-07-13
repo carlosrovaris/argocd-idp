@@ -14,7 +14,9 @@ spec:
     path: app-of-apps-o11y
     helm:
       parameters:
-      - name: "argocd.metricsserver.enabled"
+      - name: "argocd.grafana.enabled"
+        value: "true"
+      - name: "argocd.promtail.enabled"
         value: "true"
     repoURL: https://github.com/carlosrovaris/argocd-idp.git
     targetRevision: main
