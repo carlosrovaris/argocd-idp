@@ -1,9 +1,3 @@
 argocd:
-  grafana:
-    enabled: true
-
   metricsserver:
-    enabled: true
-
-  promtail:
     enabled: true
