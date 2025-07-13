@@ -1,0 +1,6 @@
+argocd:
+  grafana:
+    enabled: true
+
+  promtail:
+    enabled: true

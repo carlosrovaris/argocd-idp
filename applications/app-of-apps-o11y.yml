@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: app-of-apps-core
+  name: app-of-apps-o11y
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io/background # Ensure resources are cleaned up when the app is deleted
@@ -11,7 +11,7 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: app-of-apps-core
+    path: app-of-apps-o11y
     helm:
       parameters:
       - name: "argocd.metricsserver.enabled"
