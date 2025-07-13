@@ -12,7 +12,7 @@ spec:
     targetRevision: 12.0.2
     helm:
       valueFiles:
-      - $values/infra-core/helm/grafana/values.yaml
+      - $values/infra-core/helm/grafana/values.yml
       parameters:
       - name: "ingress.hosts[0]"
         value: "{{ .Values.argocd.grafana.ingress }}"
