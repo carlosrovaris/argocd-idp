@@ -1,3 +1,0 @@
-argocd:
-  metricsserver:
-    enabled: true
