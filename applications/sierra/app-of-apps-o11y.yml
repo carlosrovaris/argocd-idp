@@ -18,8 +18,6 @@ spec:
         value: "true"
       - name: "argocd.promtail.enabled"
         value: "true"
-      - name: "global.namePrefix"
-        value: "sierra-"
     repoURL: https://github.com/carlosrovaris/argocd-idp.git
     targetRevision: main
   syncPolicy:
