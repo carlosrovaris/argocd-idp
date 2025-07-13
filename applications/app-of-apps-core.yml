@@ -16,6 +16,8 @@ spec:
       parameters:
       - name: "argocd.grafana.enabled"
         value: "true"
+      - name: "argocd.metricsserver.enabled"
+        value: "true"
     repoURL: https://github.com/carlosrovaris/argocd-idp.git
     targetRevision: main
   syncPolicy:

@@ -1,4 +1,4 @@
-{{ if .Values.argocd.grafana.enabled }}
+{{ if .Values.argocd.metricsserver.enabled }}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
