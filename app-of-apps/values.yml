@@ -4,3 +4,6 @@ argocd:
 
   metricsserver:
     enabled: true
+
+  promtail:
+    enabled: true

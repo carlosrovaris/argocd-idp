@@ -1,0 +1,85 @@
+config:
+  clients:
+    - url: http://loki.logs.svc.cluster.local:3100/loki/api/v1/push
+      external_labels:
+        org_id: "tenant1"  # pode ser qualquer string
+      tenant_id: "tenant1"
+
+  positions:
+    filename: /var/lib/promtail/positions.yaml
+
+  volumes:
+    - name: positions-volume
+      emptyDir: {}
+
+  volumeMounts:
+    - name: positions-volume
+      mountPath: /var/lib/promtail
+
+  server:
+    http_listen_port: 3101
+    grpc_listen_port: 0
+
+  scrape_configs:
+    - job_name: kubernetes-pods
+      pipeline_stages:
+        - docker: {}
+        - cri: {}
+        - match:
+            selector: '{app=~".+"}'
+            stages:
+              - regex:
+                  expression: '^(?P<time>[^ ]+) (?P<level>[^ ]+) (?P<msg>.*)'
+              - timestamp:
+                  source: time
+                  format: RFC3339
+              - labels:
+                  level:
+              - output:
+                  source: msg
+
+      kubernetes_sd_configs:
+        - role: pod
+
+      relabel_configs:
+        - source_labels: [__meta_kubernetes_pod_node_name]
+          target_label: __host__
+
+        - source_labels: [__meta_kubernetes_namespace]
+          target_label: namespace
+
+        - source_labels: [__meta_kubernetes_pod_name]
+          target_label: pod
+
+        - source_labels: [__meta_kubernetes_pod_container_name]
+          target_label: container
+
+        - source_labels: [__meta_kubernetes_pod_label_app]
+          target_label: app
+
+        - action: replace
+          source_labels: [__meta_kubernetes_pod_label_name]
+          target_label: job
+
+        - action: keep
+          source_labels: [__meta_kubernetes_pod_label_app]
+          regex: .+
+
+extraVolumes:
+  - name: positions-volume
+    emptyDir: {}
+
+extraVolumeMounts:
+  - name: positions-volume
+    mountPath: /var/lib/promtail
+
+daemonset:
+  enabled: true
+
+resources:
+  limits:
+    memory: 200Mi
+    cpu: 100m
+  requests:
+    memory: 100Mi
+    cpu: 50m
