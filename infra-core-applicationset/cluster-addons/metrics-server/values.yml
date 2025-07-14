@@ -1,0 +1,14 @@
+image:
+  repository: k8s.gcr.io/metrics-server/metrics-server
+  tag: v0.6.1
+  pullPolicy: IfNotPresent
+
+replicas: 2
+
+args:
+  - --cert-dir=/tmp
+  - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
+  - --kubelet-use-node-status-port
+  - --metric-resolution=15s
+  - --kubelet-insecure-tls=true
+  - --secure-port=4443
