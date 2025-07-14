@@ -1,0 +1,11 @@
+apiVersion: v2
+name: app1
+description: app1
+type: application
+version: 0.1.0
+appVersion: "0.0.1"
+
+dependencies:
+  - name: bitnami/nginx
+    version: 21.0.6
+    repository: hhttps://charts.bitnami.com/bitnami
