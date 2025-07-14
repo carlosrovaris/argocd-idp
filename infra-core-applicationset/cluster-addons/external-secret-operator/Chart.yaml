@@ -6,6 +6,6 @@ version: 0.1.0
 appVersion: "0.18.2"
 
 dependencies:
-  - name: external-secrets-operator
+  - name: external-secrets
     version: 0.18.2
     repository: https://charts.external-secrets.io
