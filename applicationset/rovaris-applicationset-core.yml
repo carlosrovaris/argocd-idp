@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: cluster-addons
+  name: rovaris-addons
   namespace: argocd
 spec:
   goTemplate: true
@@ -10,10 +10,10 @@ spec:
     - matrix:
         generators:
           - git:
-              repoURL: https://github.com/argoproj/argo-cd.git
+              repoURL: https://github.com/carlosrovaris/argocd-idp.git
               revision: HEAD
               directories:
-                - path: applicationset/examples/git-generator-directory/cluster-addons/*
+                - path: infra-core-applicationset/cluster-addons/*
           - clusters:
               selector:
                 matchLabels:
@@ -21,12 +21,24 @@ spec:
   template:
     metadata:
       name: '{{.path.basename}}-{{.name}}'
+      annotations:
+        argocd.argoproj.io/sync-wave: "1"
     spec:
       project: default
       source:
-        repoURL: https://github.com/argoproj/argo-cd.git
+        repoURL: https://github.com/carlosrovaris/argocd-idp.git
         targetRevision: HEAD
         path: '{{.path.path}}'
+        helm:
+          valueFiles:
+            - values.yml
+          # Permite override de valores por cluster se existir
+          values: |
+            {{- if .path.basename }}
+            global:
+              clusterName: "{{.name}}"
+              environment: "{{.path.basename}}"
+            {{- end }}
       destination:
         server: '{{.server}}'
         namespace: '{{.path.basename}}'
