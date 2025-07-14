@@ -1,0 +1,30 @@
+prometheus:
+  prometheus:
+    enabled: true
+    prometheusSpec:
+      podMonitorSelector: {}
+      podMonitorSelectorNilUsesHelmValues: false
+      ruleSelector: {}
+      ruleSelectorNilUsesHelmValues: false
+      serviceMonitorSelector: {}
+      serviceMonitorSelectorNilUsesHelmValues: false
+      scrapeConfigSelectorNilUsesHelmValues: false
+
+  kubeStateMetrics:
+    enabled: false
+
+  alertmanager:
+    enabled: false
+
+  grafana:
+    enabled: true
+    adminUser: "admin"
+    adminPassword: "admin"
+
+  prometheusOperator:
+    enabled: true
+    namespaces: ''
+    denyNamespaces: ''
+    prometheusInstanceNamespaces: ''
+    alertmanagerInstanceNamespaces: ''
+    thanosRulerInstanceNamespaces: ''
