@@ -1,5 +1,8 @@
 nginx:
   namespaceOverride: app1
+  service:
+    type: ClusterIP
+    port: 80
   content:
     index.html: |
       <!DOCTYPE html>
