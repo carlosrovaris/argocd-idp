@@ -1,0 +1,51 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: team-a-apps
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    - matrix:
+        generators:
+          - git:
+              repoURL: https://github.com/carlosrovaris/argocd-idp.git
+              revision: HEAD
+              directories:
+                - path: infra-core-applicationset/team-a/*
+          - clusters:
+              selector:
+                matchLabels:
+                  deploy-addons: "true"
+  template:
+    metadata:
+      name: '{{.path.basename}}-{{.name}}'
+      annotations:
+        argocd.argoproj.io/sync-wave: "1"
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/carlosrovaris/argocd-idp.git
+        targetRevision: HEAD
+        path: '{{.path.path}}'
+        helm:
+          valueFiles:
+            - values.yml
+          # Permite override de valores por cluster se existir
+          values: |
+            {{- if .path.basename }}
+            global:
+              clusterName: "{{.name}}"
+              environment: "{{.path.basename}}"
+            {{- end }}
+      destination:
+        server: '{{.server}}'
+        namespace: '{{.path.basename}}'
+      syncPolicy:
+        automated:
+          selfHeal: true
+          prune: true
+        syncOptions:
+          - CreateNamespace=true
+          - PruneLast=true
