@@ -1,0 +1,22 @@
+nginx:
+  namespaceOverride: app4
+  service:
+    type: ClusterIP
+    port: 80
+  content:
+    index.html: |
+      <!DOCTYPE html>
+      <html lang="pt-br">
+      <head>
+        <meta charset="UTF-8">
+        <title>Página Personalizada APP4</title>
+        <style>
+          body { font-family: Arial, sans-serif; text-align: center; padding-top: 50px; }
+          h1 { color: #007acc; }
+        </style>
+      </head>
+      <body>
+        <h1>Bem-vindo à minha aplicação 🚀</h1>
+        <p>Esta é uma página customizada servida pelo NGINX via Helm.</p>
+      </body>
+      </html>

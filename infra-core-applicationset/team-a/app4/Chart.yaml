@@ -1,0 +1,11 @@
+apiVersion: v2
+name: app4
+description: app4
+type: application
+version: 0.1.0
+appVersion: "0.0.1"
+
+dependencies:
+  - name: nginx
+    version: 21.0.6
+    repository: https://charts.bitnami.com/bitnami
