@@ -24,7 +24,7 @@ spec:
       annotations:
         argocd.argoproj.io/sync-wave: "1"
     spec:
-      project: default
+      project: team-a
       source:
         repoURL: https://github.com/carlosrovaris/argocd-idp.git
         targetRevision: HEAD
@@ -41,7 +41,7 @@ spec:
             {{- end }}
       destination:
         server: '{{.server}}'
-        namespace: '{{.path.basename}}'
+        namespace: '{{.path.components[1]}}'
       syncPolicy:
         automated:
           selfHeal: true
