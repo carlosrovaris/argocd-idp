@@ -1,0 +1,27 @@
+# apps/crossplane/application.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: crossplane-install
+  namespace: argocd  # mesma namespace onde o ArgoCD DEV está rodando
+spec:
+  project: default
+  source:
+    repoURL: https://charts.crossplane.io/stable
+    chart: crossplane
+    targetRevision: 1.15.0
+    helm:
+      releaseName: crossplane
+      values: |
+        args:
+          - --enable-external-secret-stores
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: crossplane-system
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
+    syncOptions:
+      - CreateNamespace=true
+
