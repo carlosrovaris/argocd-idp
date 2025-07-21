@@ -1,5 +1,5 @@
 global:
-  domain: argocd.cluster.io
+  domain: argocd-spoke.cluster.io
 
 server:
   ingress:
